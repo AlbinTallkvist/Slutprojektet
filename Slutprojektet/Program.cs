@@ -2,7 +2,7 @@
 using System;
 using Raylib_cs;
 
- // Spelets höjd och bredd som metod
+// Spelets höjd och bredd som metod
 const int skärmBredd = 1280;
 const int skärmHöjd = 720;
 
@@ -10,32 +10,27 @@ const int skärmHöjd = 720;
 Raylib.InitWindow(skärmBredd, skärmHöjd, "Slutprojektet (inge namn än)");
 Raylib.SetTargetFPS(60);
 
-
 // ----------------------------------------------------------------------------------------------------->
+
+// Spelarens Rectangel (kords)
+Rectangle player = new Rectangle(170, 330, 80, 80);
+// Spelbara karaktären rörelse hastighet
+int playerSpeed = 6;
+// Sätter "welcomescreen" till den scenen som visas när man startar spelet
+string currenctScene = "welcomescreen";
 
 // Spel Loop (Main one)
 while (!Raylib.WindowShouldClose())
 {
-   
-    // Spelarens Rectangel (kords)
-    Rectangle player = new Rectangle(170, 330, 80, 80);
-            
-    // Spelbara karaktären rörelse hastighet
-    int playerSpeed = 6;
-
-
-// ----------------------------------------------------------------------------------------------------->
-//                  KEYBOARD-CONTROLS                  //
-
-
-    while (!Raylib.WindowShouldClose())
+    // KEYBOARD-CONTROLS                  
+    if (currenctScene == "level1")
     {
         // Gör så att om spelaren trycker högerpil, rör rectangle höger
         if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
         {
             player.x += playerSpeed;
         }
-        
+
         // Gör så att om spelaren trycker vänsterpil, rör rectangle vänster
         else if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT))
         {
@@ -60,12 +55,22 @@ while (!Raylib.WindowShouldClose())
 
         // Notes för mig: Gör så man inte kan hopppa för alltid
         // Cooldown?
+    }
+    else if (currenctScene == "welcomescreen")
+    {
+        // ENTER to transition from Welcome Screen to Game!
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_ENTER))
+        {
+            currenctScene = "level1";
+        }
+    }
 
-// ----------------------------------------------------------------------------------------------------->
-//                  MAP-CUSTOMIZATION                  //
-
+    // MAP-CUSTOMIZATION                  
     // Initierar Raylib-Renderingssystemet
     Raylib.BeginDrawing();
+
+   
+
 
         // Gör att bakgrunden är vit
         Raylib.ClearBackground(Color.WHITE);
@@ -74,13 +79,22 @@ while (!Raylib.WindowShouldClose())
         Raylib.DrawRectangleRec(player, Color.BLACK);
 
 
+        // Ritar text som säger man start, när programmet startas
+   if (currenctScene == "welcomescreen")
+  {
+    Raylib.DrawText("Welcome To Slutprojektet", 300, 180, 50, Color.BLACK);
+    Raylib.DrawText("\nMove using the arrow keys and jump with SPACE", 275, 230, 32, Color.BLACK);
+    Raylib.DrawText("\nENTER to begin", 515, 195, 32, Color.BLACK);
+  }
+
+  else if (currenctScene == "level1")
+  {   
+    
+  }
 
         // Avslutar Raylib-Renderingssystemet
         Raylib.EndDrawing();
     }
-
-    
-}
 
 // Stänger spelfönstret
 Raylib.CloseWindow();
