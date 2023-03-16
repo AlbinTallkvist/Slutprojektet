@@ -75,8 +75,6 @@ while (!Raylib.WindowShouldClose())
         // Gör att bakgrunden är vit
         Raylib.ClearBackground(Color.WHITE);
 
-        // Gör att spelarens karaktär (rektangeln) blir svart.
-        Raylib.DrawRectangleRec(player, Color.BLACK);
 
 
         // Ritar text som säger man start, när programmet startas
@@ -90,7 +88,11 @@ while (!Raylib.WindowShouldClose())
   else if (currenctScene == "level1")
   {   
     
+    // Gör att spelarens karaktär (rektangeln) blir svart.
+        Raylib.DrawRectangleRec(player, Color.BLACK);
   }
+
+
 
         // Avslutar Raylib-Renderingssystemet
         Raylib.EndDrawing();
