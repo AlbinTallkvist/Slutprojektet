@@ -2,7 +2,6 @@
 using System.Numerics;
 using Raylib_cs;
 
-
 // Skapar två konstanter "Skärmhöjd" & Bredd med respektvie värde som sedan kan placeras in senare i koden.
 const int SkärmBredd = 800;
 const int SkärmHöjd = 600;
@@ -14,6 +13,12 @@ string currentScene = "mainspel";
 Raylib.InitWindow(SkärmBredd, SkärmHöjd, "Hoppa Mot Himlen");
 Raylib.SetTargetFPS(60);
 
+// Metod för att färga bakgrunden helt röd
+static void ClearBackground()
+{
+    Raylib.ClearBackground(Color.RED);
+}
+
 // Skapar rektangel som spelaren kan kontrollera med en bredd på 40, höjd 80 
 // och placerar den i mitten av skärmen i x-led och vid botten av skärmen i y-led.
 Rectangle Spelare = new Rectangle(SkärmBredd / 2 - 20, SkärmHöjd - 250, 40, 80);
@@ -24,7 +29,6 @@ Vector2 SpelareHastighet = new Vector2(0, 0);
 // Sätter så att man i början när spelet startas kan hoppa och att score är 0 (bool sparar ett värde som sannt eller falskt)
 bool KanHoppa = true;
 int score = 0;
-
 
 // ----------------------------------------------------------------------------------------------------->
 //                  KEYBOARD-CONTROLS                  //
@@ -116,7 +120,7 @@ while (!Raylib.WindowShouldClose())
                 // Om den kolliderar och spelarens karaktär rör sig nerråt (positiv y) 
                 // betyder det att spelaren har landat på toppen av en platform.
                 if (SpelareHastighet.Y > 0 && SpelareInnan.y + SpelareInnan.height <= platformer[i].y)
-                {
+                {                                           // Hamna ovanför eller precis på
                     // Spelarens position är inställd på att vara precis ovanför platform
                     Spelare.y = platformer[i].y - Spelare.height;
                     // Spelarens vertikala (upp & ner) hastighet blir 0 så den inte faller och stannar på platformen.
@@ -144,7 +148,6 @@ while (!Raylib.WindowShouldClose())
                     FallOvanifrån = true;
                     break;
                 }
-
 
                 // "Else" körs om spelaren kolliderar med en platform men inte uppfyller nåt av de övre kraven
                 // Detta gör så att spelarens hastighet vertikalt (upp & ner) blir 1 och börjar falla pga gravitation
@@ -205,7 +208,7 @@ while (!Raylib.WindowShouldClose())
 
         // Startar Raylib-skrivprocessen, rensar bakgrunden och gör den grå, ritar blå rektangel som representerar spelaren
         Raylib.BeginDrawing();
-        Raylib.ClearBackground(Color.GRAY);
+        ClearBackground();
         Raylib.DrawRectangleRec(Spelare, Color.BLUE);
 
         // Ritar en mörkgrå färgad rektangel på skärmen för varje platform i platformarrayen som spelaren kan stå på
@@ -219,13 +222,13 @@ while (!Raylib.WindowShouldClose())
         string scoreText = "SCORE: " + score;
         int scoreTextBredd = Raylib.MeasureText(scoreText, 20);
         // Exakt den bit av koden som ritar ut score:n. 
-        Raylib.DrawText(scoreText, SkärmBredd - scoreTextBredd - 10, 10, 20, Color.RED);
+        Raylib.DrawText(scoreText, SkärmBredd - scoreTextBredd - 10, 10, 20, Color.WHITE);
 
 
         // Ritar ut Instruktioner hur man spelar
-        Raylib.DrawText("MAKE YOUR WAY TO THE TOP TO EARN A POINT", 5, 10, 15, Color.RED);
-        Raylib.DrawText("POINTS CAN BE SEEN ON THE SCORE COUNTER", 5, 30, 15, Color.RED);
-        Raylib.DrawText("HOW MANY POINTS CAN YOU GET?", 5, 50, 15, Color.RED);
+        Raylib.DrawText("MAKE YOUR WAY TO THE TOP TO EARN A POINT", 5, 10, 15, Color.WHITE);
+        Raylib.DrawText("POINTS CAN BE SEEN ON THE SCORE COUNTER", 5, 30, 15, Color.WHITE);
+        Raylib.DrawText("HOW MANY POINTS CAN YOU GET?", 5, 50, 15, Color.WHITE);
         Raylib.DrawText("TIP: YOU CAN WALK THROUGH A PLATFORM FROM THE SIDE", 5, 70, 12, Color.WHITE);
         Raylib.DrawText("'ARROW KEYS' TO MOVE, 'SPACEBAR' TO JUMP, 'ESC' FOR NEW PLATFORMS AND 'Q' TO END GAME", 5, 90, 10, Color.WHITE);
 
@@ -234,21 +237,21 @@ while (!Raylib.WindowShouldClose())
         if (currentScene == "gameover")
         {
             // Ta bort från bakgrunden och färga den grå.
-            Raylib.ClearBackground(Color.GRAY);
+            ClearBackground();
 
 
             // Gör texten, spelarens karaktär och platformarna som fanns under spelets gång 
             // blir onsynliga för "gameover" scenen.
             for (int i = 0; i < platformer.Length; i++)
             {
-                Raylib.DrawRectangleRec(platformer[i], Color.GRAY);
-                Raylib.DrawRectangleRec(Spelare, Color.GRAY);
-                Raylib.DrawText(scoreText, SkärmBredd - scoreTextBredd - 10, 10, 20, Color.GRAY);
-                Raylib.DrawText("MAKE YOUR WAY TO THE TOP TO EARN A POINT", 5, 10, 15, Color.GRAY);
-                Raylib.DrawText("POINTS CAN BE SEEN ON THE SCORE COUNTER", 5, 30, 15, Color.GRAY);
-                Raylib.DrawText("HOW MANY POINTS CAN YOU GET?", 5, 50, 15, Color.GRAY);
-                Raylib.DrawText("TIP: YOU CAN WALK THROUGH A PLATFORM FROM THE SIDE", 5, 70, 12, Color.GRAY);
-                Raylib.DrawText("'ARROW KEYS' TO MOVE, 'SPACEBAR' TO JUMP, 'ESC' FOR NEW PLATFORMS AND 'Q' TO END GAME", 5, 90, 10, Color.GRAY);
+                Raylib.DrawRectangleRec(platformer[i], Color.RED);
+                Raylib.DrawRectangleRec(Spelare, Color.RED);
+                Raylib.DrawText(scoreText, SkärmBredd - scoreTextBredd - 10, 10, 20, Color.RED);
+                Raylib.DrawText("MAKE YOUR WAY TO THE TOP TO EARN A POINT", 5, 10, 15, Color.RED);
+                Raylib.DrawText("POINTS CAN BE SEEN ON THE SCORE COUNTER", 5, 30, 15, Color.RED);
+                Raylib.DrawText("HOW MANY POINTS CAN YOU GET?", 5, 50, 15, Color.RED);
+                Raylib.DrawText("TIP: YOU CAN WALK THROUGH A PLATFORM FROM THE SIDE", 5, 70, 12, Color.RED);
+                Raylib.DrawText("'ARROW KEYS' TO MOVE, 'SPACEBAR' TO JUMP, 'ESC' FOR NEW PLATFORMS AND 'Q' TO END GAME", 5, 90, 10, Color.RED);
             }
 
 
