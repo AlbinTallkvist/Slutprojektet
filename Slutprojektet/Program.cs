@@ -14,7 +14,7 @@ Raylib.InitWindow(SkärmBredd, SkärmHöjd, "Hoppa Mot Himlen");
 Raylib.SetTargetFPS(60);
 
 // Metod för att färga bakgrunden helt röd
-static void ClearBackground()
+static void RensaBakgrund()
 {
     Raylib.ClearBackground(Color.RED);
 }
@@ -208,7 +208,7 @@ while (!Raylib.WindowShouldClose())
 
         // Startar Raylib-skrivprocessen, rensar bakgrunden och gör den grå, ritar blå rektangel som representerar spelaren
         Raylib.BeginDrawing();
-        ClearBackground();
+        RensaBakgrund();
         Raylib.DrawRectangleRec(Spelare, Color.BLUE);
 
         // Ritar en mörkgrå färgad rektangel på skärmen för varje platform i platformarrayen som spelaren kan stå på
@@ -237,7 +237,7 @@ while (!Raylib.WindowShouldClose())
         if (currentScene == "gameover")
         {
             // Ta bort från bakgrunden och färga den grå.
-            ClearBackground();
+            RensaBakgrund();
 
 
             // Gör texten, spelarens karaktär och platformarna som fanns under spelets gång 
